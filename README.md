@@ -101,3 +101,7 @@ Height of the picker. In `px`.
 - **Type:** Number
 
 - **Default:** 216
+
+## License
+
+MIT.
