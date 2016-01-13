@@ -7,7 +7,7 @@ export default class App extends Component {
     return (
       <div className="page">
         <header className="page-header">
-          <h1 className="page-title">React Picker</h1>
+          <h1 className="page-title">React Mobile Picker</h1>
         </header>
         <main className="page-body">
           <p className="description">React Mobile Picker is a super simple component with no restriction, which means you can use it in any way you want.</p>
