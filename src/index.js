@@ -139,8 +139,13 @@ class PickerColumn extends Component {
   }
 
   render() {
+    const translateString = `translate3d(0, ${this.state.scrollerTranslate}px, 0)`;
     const style = {
-      transform: `translate3d(0, ${this.state.scrollerTranslate}px, 0)`
+      MsTransform: translateString,
+      MozTransform: translateString,
+      OTransform: translateString,
+      WebkitTransform: translateString,
+      transform: translateString
     };
     if (this.state.isMoving) {
       style.transitionDuration = '0ms';
