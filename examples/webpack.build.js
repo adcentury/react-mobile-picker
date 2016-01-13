@@ -8,7 +8,7 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'app.js'
+    filename: '[hash].app.js'
   },
 
   module: {
