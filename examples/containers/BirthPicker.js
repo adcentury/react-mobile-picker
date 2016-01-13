@@ -69,13 +69,13 @@ export default class BirthPicker extends Component {
       }
       return nextState;
     });
-  }
+  };
 
   togglePicker = () => {
     this.setState(({isPickerShow}) => ({
       isPickerShow: !isPickerShow
     }));
-  }
+  };
 
   render() {
     const {isPickerShow, optionGroups, valueGroups} = this.state;

@@ -7,7 +7,7 @@ module.exports = {
 
   output: {
     filename: './lib/[name].js',
-    library: 'ReactPicker',
+    library: 'Picker',
     libraryTarget: 'umd'
   },
 

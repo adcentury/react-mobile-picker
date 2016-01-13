@@ -9,7 +9,7 @@ class PickerColumn extends Component {
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -42,11 +42,11 @@ class PickerColumn extends Component {
       minTranslate: columnHeight / 2 - itemHeight * options.length + itemHeight / 2,
       maxTranslate: columnHeight / 2 - itemHeight / 2
     };
-  }
+  };
 
   onValueSelected = (newValue) => {
     this.props.onChange(this.props.name, newValue);
-  }
+  };
 
   handleTouchStart = (event) => {
     const startTouchY = event.targetTouches[0].pageY;
@@ -54,7 +54,7 @@ class PickerColumn extends Component {
       startTouchY,
       startScrollerTranslate: scrollerTranslate
     }));
-  }
+  };
 
   handleTouchMove = (event) => {
     event.preventDefault();
@@ -76,7 +76,7 @@ class PickerColumn extends Component {
         scrollerTranslate: nextScrollerTranslate
       };
     });
-  }
+  };
 
   handleTouchEnd = (event) => {
     if (!this.state.isMoving) {
@@ -100,7 +100,7 @@ class PickerColumn extends Component {
       }
       this.onValueSelected(options[activeIndex]);
     }, 0);
-  }
+  };
 
   handleTouchCancel = (event) => {
     if (!this.state.isMoving) {
@@ -112,13 +112,13 @@ class PickerColumn extends Component {
       startScrollerTranslate: 0,
       scrollerTranslate: startScrollerTranslate
     }));
-  }
+  };
 
   handleItemClick = (option) => {
     if (option !== this.props.value) {
       this.onValueSelected(option);
     }
-  }
+  };
 
   renderItems() {
     const {options, itemHeight, value} = this.props;
@@ -168,12 +168,12 @@ export default class Picker extends Component {
     onChange: PropTypes.func.isRequired,
     itemHeight: PropTypes.number,
     height: PropTypes.number
-  }
+  };
 
   static defaultProps = {
     itemHeight: 36,
     height: 216
-  }
+  };
 
   renderInner() {
     const {optionGroups, valueGroups, itemHeight, height, onChange} = this.props;
