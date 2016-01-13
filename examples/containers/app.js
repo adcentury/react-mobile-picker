@@ -10,7 +10,7 @@ export default class App extends Component {
           <h1 className="page-title">React Picker</h1>
         </header>
         <main className="page-body">
-          <p className="description">React Picker is a super simple component with no restriction, which means you can use it in any way you want.</p>
+          <p className="description">React Mobile Picker is a super simple component with no restriction, which means you can use it in any way you want.</p>
           <p className="description">Here are two examples:</p>
           <NamePicker />
           <BirthPicker />
