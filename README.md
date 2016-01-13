@@ -2,6 +2,8 @@
 
 React Mobile Picker is a super simple component with no restriction, which means you can use it in any way you want.
 
+![screen-capture](./examples/screen-capture.gif)
+
 ## Preview
 
 ![qr](./examples/qr.png)
