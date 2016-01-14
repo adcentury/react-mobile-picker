@@ -1,6 +1,6 @@
 {
   "name": "react-mobile-picker",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
@@ -21,6 +21,7 @@
     "react mobile picker",
     "mobile picker",
     "picker",
+    "react-component",
     "react components",
     "react ui",
     "mobile ui"
