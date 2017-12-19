@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import NamePicker from './NamePicker';
 import BirthPicker from './BirthPicker';
-import AreaPicker from './AreaPicker';
 
 export default class App extends Component {
   render() {
@@ -15,7 +14,6 @@ export default class App extends Component {
           <p className="description">Here are two examples:</p>
           <NamePicker />
           <BirthPicker />
-          <AreaPicker textKey="name" />
         </main>
       </div>
     );

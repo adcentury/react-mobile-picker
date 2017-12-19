@@ -3,10 +3,9 @@ import './style.less';
 
 class PickerColumn extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
+    name: PropTypes.string.isRequired,
     value: PropTypes.any.isRequired,
-    textKey: PropTypes.string,
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
@@ -22,10 +21,6 @@ class PickerColumn extends Component {
     };
   }
 
-  rawData(target, key) {
-    return typeof target === 'object' ? target[key] : target;
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.state.isMoving) {
       return;
@@ -34,12 +29,11 @@ class PickerColumn extends Component {
   }
 
   computeTranslate = (props) => {
-    const {options, value, textKey, itemHeight, columnHeight} = props;
+    const {options, value, itemHeight, columnHeight} = props;
     let selectedIndex = options.indexOf(value);
-
     if (selectedIndex < 0) {
       // throw new ReferenceError();
-      console.warn('Warning: "' + this.props.name+ '" doesn\'t contain an option of "' + this.rawData(value, textKey) + '".');
+      console.warn('Warning: "' + this.props.name+ '" doesn\'t contain an option of "' + value + '".');
       this.onValueSelected(options[0]);
       selectedIndex = 0;
     }
@@ -127,7 +121,7 @@ class PickerColumn extends Component {
   };
 
   renderItems() {
-    const {options, itemHeight, value, textKey} = this.props;
+    const {options, itemHeight, value} = this.props;
     return options.map((option, index) => {
       const style = {
         height: itemHeight + 'px',
@@ -139,7 +133,7 @@ class PickerColumn extends Component {
           key={index}
           className={className}
           style={style}
-          onClick={() => this.handleItemClick(option)}>{this.rawData(option, textKey)}</div>
+          onClick={() => this.handleItemClick(option)}>{option}</div>
       );
     });
   }
@@ -178,8 +172,7 @@ export default class Picker extends Component {
     valueGroups: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     itemHeight: PropTypes.number,
-    height: PropTypes.number,
-    textKey: PropTypes.string,
+    height: PropTypes.number
   };
 
   static defaultProps = {
@@ -188,7 +181,7 @@ export default class Picker extends Component {
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, textKey, itemHeight, height, onChange} = this.props;
+    const {optionGroups, valueGroups, itemHeight, height, onChange} = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -201,7 +194,6 @@ export default class Picker extends Component {
           name={name}
           options={optionGroups[name]}
           value={valueGroups[name]}
-          textKey={textKey}
           itemHeight={itemHeight}
           columnHeight={height}
           onChange={onChange} />
