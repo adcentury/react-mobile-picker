@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes, WheelEvent } from 'react';
 import './style.less';
 
 class PickerColumn extends Component {
@@ -29,11 +29,11 @@ class PickerColumn extends Component {
   }
 
   computeTranslate = (props) => {
-    const {options, value, itemHeight, columnHeight} = props;
+    const { options, value, itemHeight, columnHeight } = props;
     let selectedIndex = options.indexOf(value);
     if (selectedIndex < 0) {
       // throw new ReferenceError();
-      console.warn('Warning: "' + this.props.name+ '" doesn\'t contain an option of "' + value + '".');
+      console.warn('Warning: "' + this.props.name + '" doesn\'t contain an option of "' + value + '".');
       this.onValueSelected(options[0]);
       selectedIndex = 0;
     }
@@ -50,7 +50,7 @@ class PickerColumn extends Component {
 
   handleTouchStart = (event) => {
     const startTouchY = event.targetTouches[0].pageY;
-    this.setState(({scrollerTranslate}) => ({
+    this.setState(({ scrollerTranslate }) => ({
       startTouchY,
       startScrollerTranslate: scrollerTranslate
     }));
@@ -59,7 +59,7 @@ class PickerColumn extends Component {
   handleTouchMove = (event) => {
     event.preventDefault();
     const touchY = event.targetTouches[0].pageY;
-    this.setState(({isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate}) => {
+    this.setState(({ isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate }) => {
       if (!isMoving) {
         return {
           isMoving: true
@@ -88,17 +88,7 @@ class PickerColumn extends Component {
       startScrollerTranslate: 0
     });
     setTimeout(() => {
-      const {options, itemHeight} = this.props;
-      const {scrollerTranslate, minTranslate, maxTranslate} = this.state;
-      let activeIndex;
-      if (scrollerTranslate > maxTranslate) {
-        activeIndex = 0;
-      } else if (scrollerTranslate < minTranslate) {
-        activeIndex = options.length - 1;
-      } else {
-        activeIndex = - Math.floor((scrollerTranslate - maxTranslate) / itemHeight);
-      }
-      this.onValueSelected(options[activeIndex]);
+      this.postMove();
     }, 0);
   };
 
@@ -120,8 +110,50 @@ class PickerColumn extends Component {
     }
   };
 
+  postMove() {
+    const { options, itemHeight } = this.props;
+    const { scrollerTranslate, minTranslate, maxTranslate } = this.state;
+    let activeIndex;
+    if (scrollerTranslate > maxTranslate) {
+      activeIndex = 0;
+    } else if (scrollerTranslate < minTranslate) {
+      activeIndex = options.length - 1;
+    } else {
+      activeIndex = - Math.floor((scrollerTranslate - maxTranslate) / itemHeight);
+    }
+    this.onValueSelected(options[activeIndex]);
+  }
+
+  postWheel() {
+    const that = this;
+    setTimeout(() => {
+      if (that.state.isScrolling > (Date.now() - 250)) {
+        this.postWheel();
+        return;
+      }
+      this.postMove();
+    }, 250);
+  }
+
+  handleWheel = (event) => {
+
+    const deltaY = event.deltaY;
+
+    this.setState(({ scrollerTranslate, minTranslate, maxTranslate }) => {
+      const newValue = (scrollerTranslate || 0) + Math.round(deltaY);
+      const newTranslate = Math.max(minTranslate, Math.min(maxTranslate, (scrollerTranslate || 0) + Math.round(deltaY)));
+
+      this.postWheel();
+
+      return {
+        scrollerTranslate: newTranslate,
+        isScrolling: Date.now()
+      };
+    });
+  };
+
   renderItems() {
-    const {options, itemHeight, value} = this.props;
+    const { options, itemHeight, value } = this.props;
     return options.map((option, index) => {
       const style = {
         height: itemHeight + 'px',
@@ -150,7 +182,7 @@ class PickerColumn extends Component {
     if (this.state.isMoving) {
       style.transitionDuration = '0ms';
     }
-    return(
+    return (
       <div className="picker-column">
         <div
           className="picker-scroller"
@@ -158,7 +190,9 @@ class PickerColumn extends Component {
           onTouchStart={this.handleTouchStart}
           onTouchMove={this.handleTouchMove}
           onTouchEnd={this.handleTouchEnd}
-          onTouchCancel={this.handleTouchCancel}>
+          onTouchCancel={this.handleTouchCancel}
+          onWheel={this.handleWheel}
+        >
           {this.renderItems()}
         </div>
       </div>
@@ -181,7 +215,7 @@ export default class Picker extends Component {
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange} = this.props;
+    const { optionGroups, valueGroups, itemHeight, height, onChange } = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
