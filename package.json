@@ -1,11 +1,11 @@
 {
-  "name": "react-mobile-picker",
-  "version": "0.1.10",
+  "name": "react-mobile-picker-wheel",
+  "version": "0.2.0",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
     "type": "git",
-    "url": "adcentury/react-mobile-picker"
+    "url": "sielay/react-mobile-picker"
   },
   "dependencies": {
     "react": "^0.14.3",
@@ -63,5 +63,11 @@
     "name": "Lei Lei",
     "email": "adcentury100@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "sielay",
+      "email": "lukaszsielski@gmail.com"
+    }
+  ],
   "license": "MIT"
 }
