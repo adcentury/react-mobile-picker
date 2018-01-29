@@ -37,7 +37,8 @@ export default class BirthPicker extends Component {
         }
       };
       if (name === 'year' && valueGroups.month === '02') {
-        if (parseInt(value) % 4 === 0) {
+        const yearValue = parseInt(value);
+        if ((yearValue % 4 === 0 && yearValue % 100 !== 0) || (yearValue % 400 === 0)) {
           nextState.optionGroups = {
             ...optionGroups,
             day: generateNumberArray(1, 29)
