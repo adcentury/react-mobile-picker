@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import './style.less';
 
@@ -27,6 +28,14 @@ class PickerColumn extends Component {
       return;
     }
     this.setState(this.computeTranslate(nextProps));
+  }
+
+  componentDidMount () {
+    ReactDOM.findDOMNode(this.refScroll).addEventListener('touchmove', this.handleTouchMove)
+  }
+
+  componentWillUnmount () {
+    ReactDOM.findDOMNode(this.refScroll).removeEventListener('touchmove', this.handleTouchMove)
   }
 
   computeTranslate = (props) => {
@@ -154,10 +163,11 @@ class PickerColumn extends Component {
     return(
       <div className="picker-column">
         <div
+          ref={ref => (this.refScroll = ref)}
           className="picker-scroller"
           style={style}
           onTouchStart={this.handleTouchStart}
-          onTouchMove={this.handleTouchMove}
+          // onTouchMove={this.handleTouchMove}
           onTouchEnd={this.handleTouchEnd}
           onTouchCancel={this.handleTouchCancel}>
           {this.renderItems()}
