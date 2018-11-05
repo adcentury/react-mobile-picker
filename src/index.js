@@ -9,7 +9,8 @@ class PickerColumn extends Component {
     value: PropTypes.any.isRequired,
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -118,6 +119,8 @@ class PickerColumn extends Component {
   handleItemClick = (option) => {
     if (option !== this.props.value) {
       this.onValueSelected(option);
+    } else {
+      this.props.onClick(this.props.name, this.props.value);
     }
   };
 
@@ -172,17 +175,19 @@ export default class Picker extends Component {
     optionGroups: PropTypes.object.isRequired,
     valueGroups: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     itemHeight: PropTypes.number,
     height: PropTypes.number
   };
 
   static defaultProps = {
+    onClick: () => {},
     itemHeight: 36,
     height: 216
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange} = this.props;
+    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick} = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -197,7 +202,8 @@ export default class Picker extends Component {
           value={valueGroups[name]}
           itemHeight={itemHeight}
           columnHeight={height}
-          onChange={onChange} />
+          onChange={onChange}
+          onClick={onClick} />
       );
     }
     return (
