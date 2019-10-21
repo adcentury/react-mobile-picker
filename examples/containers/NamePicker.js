@@ -8,8 +8,8 @@ export default class NamePicker extends Component {
     this.state = {
       valueGroups: {
         title: {
-          label: <span style={{color: 'red'}}>"Mr."</span>,
-          value: 0
+          label: <span style={{color: 'green'}}>Mrs.</span>,
+          value: 1
         },
         firstName: {
           label: "Michael",
