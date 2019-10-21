@@ -117,7 +117,7 @@ class PickerColumn extends Component {
   };
 
   handleItemClick = (option) => {
-    if (option !== this.props.value) {
+    if (option.value !== this.props.value.value) {
       this.onValueSelected(option);
     } else {
       this.props.onClick(this.props.name, this.props.value);
@@ -131,13 +131,13 @@ class PickerColumn extends Component {
         height: itemHeight + 'px',
         lineHeight: itemHeight + 'px'
       };
-      const className = `picker-item${option === value ? ' picker-item-selected' : ''}`;
+      const className = `picker-item${option.value === value.value ? ' picker-item-selected' : ''}`;
       return (
         <div
           key={index}
           className={className}
           style={style}
-          onClick={() => this.handleItemClick(option)}>{option}</div>
+          onClick={() => this.handleItemClick(option)}>{option.label}</div>
       );
     });
   }
@@ -209,7 +209,7 @@ export default class Picker extends Component {
     return (
       <div className="picker-inner">
         {columnNodes}
-        <div className="picker-highlight" style={highlightStyle}></div>
+        <div className="picker-highlight" style={highlightStyle}/>
       </div>
     );
   }
