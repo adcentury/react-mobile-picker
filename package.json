@@ -1,11 +1,11 @@
 {
-  "name": "react-mobile-picker",
-  "version": "0.1.12",
+  "name": "react-mobile-picker-extended",
+  "version": "0.1.14",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
     "type": "git",
-    "url": "adcentury/react-mobile-picker"
+    "url": "Azzyl/react-mobile-picker"
   },
   "dependencies": {
     "prop-types": "^15.6.0"
@@ -69,5 +69,11 @@
     "name": "Lei Lei",
     "email": "adcentury100@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Azat Belgibayev",
+      "email": "bemoob@ya.ru"
+    }
+  ],
   "license": "MIT"
 }
