@@ -1,11 +1,11 @@
 {
-  "name": "react-mobile-picker-extended",
-  "version": "0.1.15",
+  "name": "react-mobile-picker",
+  "version": "0.1.14",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
     "type": "git",
-    "url": "Azzyl/react-mobile-picker"
+    "url": "adcentury/react-mobile-picker"
   },
   "dependencies": {
     "prop-types": "^15.6.0"
@@ -64,6 +64,12 @@
     "build-examples": "rimraf examples/dist && eslint examples && set NODE_ENV=production && webpack --progress --hide-modules --config examples/webpack.build.js",
     "build": "npm run clean && npm run lint && set NODE_ENV=production && webpack --progress --hide-modules --config webpack.build.js",
     "test": "npm run lint"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true
   },
   "author": {
     "name": "Lei Lei",
