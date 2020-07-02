@@ -4,6 +4,3 @@ bower_components
 npm-debug.log
 
 examples/dist
-
-# IDE files
-.idea/*
