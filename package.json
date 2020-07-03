@@ -1,6 +1,6 @@
 {
   "name": "@maxiru/react-mobile-picker",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
