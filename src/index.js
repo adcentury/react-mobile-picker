@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import './style.less';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import './style.less'
+
+const TOUCH_TIMEOUT = 100
 
 class PickerColumn extends Component {
   static propTypes = {
@@ -11,150 +13,188 @@ class PickerColumn extends Component {
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isMoving: false,
       startTouchY: 0,
       startScrollerTranslate: 0,
       ...this.computeTranslate(props)
-    };
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.isMoving) {
-      return;
+      return
     }
-    this.setState(this.computeTranslate(nextProps));
+    this.setState(this.computeTranslate(nextProps))
   }
 
   computeTranslate = (props) => {
-    const {options, value, itemHeight, columnHeight} = props;
-    let selectedIndex = options.indexOf(value);
+    const { options, value, itemHeight, columnHeight } = props
+    let selectedIndex = options.indexOf(value)
     if (selectedIndex < 0) {
-      // throw new ReferenceError();
-      console.warn('Warning: "' + this.props.name+ '" doesn\'t contain an option of "' + value + '".');
-      this.onValueSelected(options[0]);
-      selectedIndex = 0;
+      // throw new ReferenceError()
+      console.warn(`Warning: ${this.props.name} doesn't contain an option of ${value}.`)
+      this.onValueSelected(options[0])
+      selectedIndex = 0
     }
     return {
       scrollerTranslate: columnHeight / 2 - itemHeight / 2 - selectedIndex * itemHeight,
       minTranslate: columnHeight / 2 - itemHeight * options.length + itemHeight / 2,
       maxTranslate: columnHeight / 2 - itemHeight / 2
-    };
-  };
+    }
+  }
 
   onValueSelected = (newValue) => {
-    this.props.onChange(this.props.name, newValue);
-  };
+    this.props.onChange(this.props.name, newValue)
+  }
 
   handleTouchStart = (event) => {
-    const startTouchY = event.targetTouches[0].pageY;
-    this.setState(({scrollerTranslate}) => ({
+    if (this.isTouchedOffTimeout) {
+      clearTimeout(this.isTouchedOffTimeout)
+    } else {
+      // added isTouched flag to prevent extra onClick event
+      this.isTouchedOnTimeout = setTimeout(() => {
+        this.isTouchedOnTimeout = null
+        this.isTouched = true
+      }, TOUCH_TIMEOUT)
+    }
+
+    const startTouchY = event.touches[0].clientY
+    this.setState(({ scrollerTranslate }) => ({
       startTouchY,
       startScrollerTranslate: scrollerTranslate
-    }));
-  };
+    }))
+  }
 
   handleTouchMove = (event) => {
-    event.preventDefault();
-    const touchY = event.targetTouches[0].pageY;
-    this.setState(({isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate}) => {
+    event.preventDefault()
+    const touchY = event.touches[0].clientY
+    this.setState(({ isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate }) => {
       if (!isMoving) {
         return {
           isMoving: true
         }
       }
 
-      let nextScrollerTranslate = startScrollerTranslate + touchY - startTouchY;
+      let nextScrollerTranslate = startScrollerTranslate + touchY - startTouchY
       if (nextScrollerTranslate < minTranslate) {
-        nextScrollerTranslate = minTranslate - Math.pow(minTranslate - nextScrollerTranslate, 0.8);
+        nextScrollerTranslate = minTranslate - Math.pow(minTranslate - nextScrollerTranslate, 0.8)
       } else if (nextScrollerTranslate > maxTranslate) {
-        nextScrollerTranslate = maxTranslate + Math.pow(nextScrollerTranslate - maxTranslate, 0.8);
+        nextScrollerTranslate = maxTranslate + Math.pow(nextScrollerTranslate - maxTranslate, 0.8)
       }
       return {
         scrollerTranslate: nextScrollerTranslate
-      };
-    });
-  };
+      }
+    })
+  }
 
   handleTouchEnd = (event) => {
+    if (this.isTouchedOnTimeout) {
+      clearTimeout(this.isTouchedOnTimeout)
+    } else {
+      // added isTouched flag to prevent extra onClick event
+      this.isTouchedOffTimeout = setTimeout(() => {
+        this.isTouchedOffTimeout = null
+        this.isTouched = false
+      }, TOUCH_TIMEOUT)
+    }
+
     if (!this.state.isMoving) {
-      return;
+      return
     }
     this.setState({
       isMoving: false,
       startTouchY: 0,
       startScrollerTranslate: 0
-    });
+    })
     setTimeout(() => {
-      const {options, itemHeight} = this.props;
-      const {scrollerTranslate, minTranslate, maxTranslate} = this.state;
-      let activeIndex;
+      const { options, itemHeight } = this.props
+      const { scrollerTranslate, minTranslate, maxTranslate } = this.state
+      let activeIndex
       if (scrollerTranslate > maxTranslate) {
-        activeIndex = 0;
+        activeIndex = 0
       } else if (scrollerTranslate < minTranslate) {
-        activeIndex = options.length - 1;
+        activeIndex = options.length - 1
       } else {
-        activeIndex = - Math.floor((scrollerTranslate - maxTranslate) / itemHeight);
+        activeIndex = -Math.round((scrollerTranslate - maxTranslate) / itemHeight)
       }
-      this.onValueSelected(options[activeIndex]);
-    }, 0);
-  };
+      this.onValueSelected(options[activeIndex])
+    }, 0)
+  }
 
   handleTouchCancel = (event) => {
-    if (!this.state.isMoving) {
-      return;
+    if (this.isTouchedOnTimeout) {
+      clearTimeout(this.isTouchedOnTimeout)
+    } else {
+      // added isTouched flag to prevent extra onClick event
+      this.isTouchedOffTimeout = setTimeout(() => {
+        this.isTouchedOffTimeout = null
+        this.isTouched = false
+      }, TOUCH_TIMEOUT)
     }
-    this.setState((startScrollerTranslate) => ({
-      isMoving: false,
-      startTouchY: 0,
-      startScrollerTranslate: 0,
-      scrollerTranslate: startScrollerTranslate
-    }));
-  };
+
+    if (!this.state.isMoving) {
+      return
+    }
+    this.setState(({ startScrollerTranslate }) => {
+      return {
+        isMoving: false,
+        startTouchY: 0,
+        startScrollerTranslate: 0,
+        scrollerTranslate: startScrollerTranslate
+      }
+    })
+  }
 
   handleItemClick = (option) => {
+    if (this.isTouched) return
+
     if (option !== this.props.value) {
-      this.onValueSelected(option);
+      this.onValueSelected(option)
     } else {
-      this.props.onClick(this.props.name, this.props.value);
+      this.props.onClick(this.props.name, this.props.value)
     }
-  };
+  }
 
   renderItems() {
-    const {options, itemHeight, value} = this.props;
+    const { options, itemHeight, value } = this.props
     return options.map((option, index) => {
       const style = {
         height: itemHeight + 'px',
         lineHeight: itemHeight + 'px'
-      };
-      const className = `picker-item${option === value ? ' picker-item-selected' : ''}`;
+      }
+      const className = `picker-item${option === value ? ' picker-item-selected' : ''}`
+      const onClick = () => this.handleItemClick(option)
       return (
         <div
           key={index}
           className={className}
           style={style}
-          onClick={() => this.handleItemClick(option)}>{option}</div>
-      );
-    });
+          onClick={onClick}
+        >
+          {option}
+        </div>
+      )
+    })
   }
 
   render() {
-    const translateString = `translate3d(0, ${this.state.scrollerTranslate}px, 0)`;
+    const translateString = `translate3d(0, ${this.state.scrollerTranslate}px, 0)`
     const style = {
       MsTransform: translateString,
       MozTransform: translateString,
       OTransform: translateString,
       WebkitTransform: translateString,
       transform: translateString
-    };
-    if (this.state.isMoving) {
-      style.transitionDuration = '0ms';
     }
-    return(
+    if (this.state.isMoving) {
+      style.transitionDuration = '0ms'
+    }
+    return (
       <div className="picker-column">
         <div
           className="picker-scroller"
@@ -178,21 +218,21 @@ export default class Picker extends Component {
     onClick: PropTypes.func,
     itemHeight: PropTypes.number,
     height: PropTypes.number
-  };
+  }
 
   static defaultProps = {
     onClick: () => {},
     itemHeight: 36,
     height: 216
-  };
+  }
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick} = this.props;
+    const { optionGroups, valueGroups, itemHeight, height, onChange, onClick } = this.props
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
-    };
-    const columnNodes = [];
+    }
+    const columnNodes = []
     for (let name in optionGroups) {
       columnNodes.push(
         <PickerColumn
@@ -204,25 +244,25 @@ export default class Picker extends Component {
           columnHeight={height}
           onChange={onChange}
           onClick={onClick} />
-      );
+      )
     }
     return (
       <div className="picker-inner">
         {columnNodes}
-        <div className="picker-highlight" style={highlightStyle}></div>
+        <div className="picker-highlight" style={highlightStyle} />
       </div>
-    );
+    )
   }
 
   render() {
     const style = {
       height: this.props.height
-    };
+    }
 
     return (
       <div className="picker-container" style={style}>
         {this.renderInner()}
       </div>
-    );
+    )
   }
 }
