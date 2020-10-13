@@ -12,7 +12,8 @@ class PickerColumn extends Component {
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    scrollTransitionDuration: PropTypes.number
   }
 
   constructor(props) {
@@ -123,7 +124,7 @@ class PickerColumn extends Component {
         activeIndex = -Math.round((scrollerTranslate - maxTranslate) / itemHeight)
       }
       this.onValueSelected(options[activeIndex])
-    }, 0)
+    }, this.props.scrollTransitionDuration)
   }
 
   handleTouchCancel = (event) => {
@@ -192,8 +193,10 @@ class PickerColumn extends Component {
       transform: translateString
     }
     if (this.state.isMoving) {
-      style.transitionDuration = '0ms'
+      style.transitionDuration = `${this.props.scrollTransitionDuration}ms`
+      style.transitionTimingFunction = 'ease'
     }
+
     return (
       <div className="picker-column">
         <div
@@ -217,17 +220,18 @@ export default class Picker extends Component {
     onChange: PropTypes.func.isRequired,
     onClick: PropTypes.func,
     itemHeight: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    scrollTransitionDuration: PropTypes.number
   }
 
   static defaultProps = {
-    onClick: () => {},
+    onClick: () => { },
     itemHeight: 36,
     height: 216
   }
 
   renderInner() {
-    const { optionGroups, valueGroups, itemHeight, height, onChange, onClick } = this.props
+    const { optionGroups, valueGroups, itemHeight, height, onChange, onClick, scrollTransitionDuration } = this.props
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -243,7 +247,9 @@ export default class Picker extends Component {
           itemHeight={itemHeight}
           columnHeight={height}
           onChange={onChange}
-          onClick={onClick} />
+          onClick={onClick}
+          scrollTransitionDuration={scrollTransitionDuration}
+        />
       )
     }
     return (
