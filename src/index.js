@@ -124,7 +124,7 @@ class PickerColumn extends Component {
         activeIndex = -Math.round((scrollerTranslate - maxTranslate) / itemHeight)
       }
       this.onValueSelected(options[activeIndex])
-    }, this.props.scrollTransitionDuration)
+    }, this.props.scrollTransitionDuration || 0)
   }
 
   handleTouchCancel = (event) => {
@@ -193,7 +193,7 @@ class PickerColumn extends Component {
       transform: translateString
     }
     if (this.state.isMoving) {
-      style.transitionDuration = `${this.props.scrollTransitionDuration}ms`
+      style.transitionDuration = `${this.props.scrollTransitionDuration || 0}ms`
       style.transitionTimingFunction = 'ease'
     }
 
