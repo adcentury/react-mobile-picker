@@ -13,7 +13,7 @@ class PickerColumn extends Component {
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
-    scrollTransitionDuration: PropTypes.number.isRequired
+    scrollTransitionDuration: PropTypes.number
   }
 
   constructor(props) {
@@ -221,7 +221,7 @@ export default class Picker extends Component {
     onClick: PropTypes.func,
     itemHeight: PropTypes.number,
     height: PropTypes.number,
-    scrollTransitionDuration: PropTypes.number.isRequired
+    scrollTransitionDuration: PropTypes.number
   }
 
   static defaultProps = {
