@@ -1,6 +1,6 @@
 {
   "name": "@maxiru/react-mobile-picker",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
@@ -48,7 +48,6 @@
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-transform-catch-errors": "^1.0.0",
-    "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.2.0",
     "rimraf": "^2.4.4",
     "style-loader": "^0.13.0",
