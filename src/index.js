@@ -194,7 +194,6 @@ class PickerColumn extends Component {
     }
     if (this.state.isMoving) {
       style.transitionDuration = `${this.props.scrollTransitionDuration || 0}ms`
-      style.transitionTimingFunction = 'ease'
     }
 
     return (
