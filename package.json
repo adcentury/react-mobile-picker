@@ -1,11 +1,14 @@
 {
-  "name": "react-mobile-picker",
-  "version": "0.1.12",
+  "name": "@maxiru/react-mobile-picker",
+  "version": "0.1.23",
   "description": "An iOS like select box component for React",
   "main": "lib/react-mobile-picker.js",
   "repository": {
     "type": "git",
-    "url": "adcentury/react-mobile-picker"
+    "url": "https://github.com/maxiru/react-mobile-picker"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.simis.ai/repository/npm-private/"
   },
   "dependencies": {
     "prop-types": "^15.6.0"
@@ -42,12 +45,12 @@
     "express": "^4.13.3",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.2.0",
-    "rimraf": "^2.4.4",
+    "rimraf": "^2.7.1",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",

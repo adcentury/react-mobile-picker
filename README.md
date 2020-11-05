@@ -44,6 +44,7 @@ var Picker = require('react-mobile-picker');
 | onClick(name, value) | Function | N/A | Callback called when user click on selected value. |
 | itemHeight | Number | 36 | Height of each item (that is each option). In `px`. |
 | height | Number | 216 | Height of the picker. In `px`. |
+| scrollTransitionDuration | Number | 0 | Scroll duration in `milliseconds`. |
 
 ## Getting Started
 
