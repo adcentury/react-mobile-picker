@@ -59,7 +59,7 @@ class PickerColumn extends Component {
   };
 
   safePreventDefault = (event) =>{
-    const passiveEvents = ["onTouchStart", "onTouchMove", "onWheel"];
+    const passiveEvents = ['onTouchStart', 'onTouchMove', 'onWheel'];
     if(!passiveEvents.includes(event._reactName)) {
       event.preventDefault();
     }
