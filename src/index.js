@@ -58,8 +58,15 @@ class PickerColumn extends Component {
     }));
   };
 
+  safePreventDefault = (event) =>{
+    const passiveEvents = ['onTouchStart', 'onTouchMove', 'onWheel'];
+    if(!passiveEvents.includes(event._reactName)) {
+      event.preventDefault();
+    }
+  }
+
   handleTouchMove = (event) => {
-    event.preventDefault();
+    this.safePreventDefault(event);
     const touchY = event.targetTouches[0].pageY;
     this.setState(({isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate}) => {
       if (!isMoving) {
