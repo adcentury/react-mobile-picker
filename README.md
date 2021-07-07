@@ -1,6 +1,6 @@
 # React Mobile Picker
 
-[![Travis](https://img.shields.io/travis/adcentury/react-mobile-picker.svg)](https://travis-ci.org/adcentury/react-mobile-picker) [![npm](https://img.shields.io/npm/dm/react-mobile-picker.svg)](https://www.npmjs.com/package/react-mobile-picker) [![GitHub license](https://img.shields.io/github/license/adcentury/react-mobile-picker.svg)](https://github.com/adcentury/react-mobile-picker/blob/master/LICENSE)
+[![Travis](https://travis-ci.org/adcentury/react-mobile-picker.svg?branch=master)](https://travis-ci.org/adcentury/react-mobile-picker) [![npm](https://img.shields.io/npm/dm/react-mobile-picker.svg)](https://www.npmjs.com/package/react-mobile-picker) [![GitHub license](https://img.shields.io/github/license/adcentury/react-mobile-picker.svg)](https://github.com/adcentury/react-mobile-picker/blob/master/LICENSE)
 
 React Mobile Picker is a super simple component with no restriction, which means you can use it in any way you want.
 
