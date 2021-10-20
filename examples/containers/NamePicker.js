@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import Picker from 'react-mobile-picker';
 
 export default class NamePicker extends Component {
@@ -41,6 +40,7 @@ export default class NamePicker extends Component {
         </div>
         <div className="picker-inline-container">
           <Picker
+            preventBackgroundScroll
             optionGroups={optionGroups}
             valueGroups={valueGroups}
             onChange={this.handleChange} />

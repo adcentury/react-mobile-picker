@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import Picker from 'react-mobile-picker';
 
 function generateNumberArray(begin, end) {
@@ -110,6 +109,7 @@ export default class BirthPicker extends Component {
               <a href="javascript:;" onClick={this.togglePicker}>OK</a>
             </header>
             <Picker
+             preventBackgroundScroll
              optionGroups={optionGroups}
              valueGroups={valueGroups}
              onChange={this.handleChange} />

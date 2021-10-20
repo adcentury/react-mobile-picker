@@ -10,7 +10,8 @@ class PickerColumn extends Component {
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    preventBackgroundScroll: PropTypes.bool
   };
 
   constructor(props) {
@@ -51,6 +52,9 @@ class PickerColumn extends Component {
   };
 
   handleTouchStart = (event) => {
+    if (this.props.prevent) {
+      document.body.style.overflow = 'hidden'
+    }
     const startTouchY = event.targetTouches[0].pageY;
     this.setState(({scrollerTranslate}) => ({
       startTouchY,
@@ -58,15 +62,7 @@ class PickerColumn extends Component {
     }));
   };
 
-  safePreventDefault = (event) =>{
-    const passiveEvents = ['onTouchStart', 'onTouchMove', 'onWheel'];
-    if(!passiveEvents.includes(event._reactName)) {
-      event.preventDefault();
-    }
-  }
-
   handleTouchMove = (event) => {
-    this.safePreventDefault(event);
     const touchY = event.targetTouches[0].pageY;
     this.setState(({isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate}) => {
       if (!isMoving) {
@@ -88,6 +84,9 @@ class PickerColumn extends Component {
   };
 
   handleTouchEnd = (event) => {
+    if (this.props.prevent) {
+      setTimeout(() => document.body.style.overflow = 'auto', 300)
+    }
     if (!this.state.isMoving) {
       return;
     }
@@ -112,6 +111,9 @@ class PickerColumn extends Component {
   };
 
   handleTouchCancel = (event) => {
+    if (this.props.prevent) {
+      setTimeout(() => document.body.style.overflow = 'auto', 300)
+    }
     if (!this.state.isMoving) {
       return;
     }
@@ -194,7 +196,7 @@ export default class Picker extends Component {
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick} = this.props;
+    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick, preventBackgroundScroll} = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -203,6 +205,7 @@ export default class Picker extends Component {
     for (let name in optionGroups) {
       columnNodes.push(
         <PickerColumn
+          prevent={preventBackgroundScroll}
           key={name}
           name={name}
           options={optionGroups[name]}

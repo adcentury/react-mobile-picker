@@ -69,5 +69,6 @@
     "name": "Lei Lei",
     "email": "adcentury100@gmail.com"
   },
+  "contributors": ["nadav-co"],
   "license": "MIT"
 }
