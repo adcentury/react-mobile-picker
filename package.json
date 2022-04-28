@@ -7,7 +7,6 @@
     "type": "git",
     "url": "adcentury/react-mobile-picker"
   },
-  "dependencies": {},
   "files": [
     "LICENCE",
     "README.md",
@@ -24,14 +23,27 @@
     "react ui",
     "mobile ui"
   ],
-  "devDependencies": {},
-  "peerDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.5",
+    "eslint": "^8.14.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-webpack-plugin": "^3.1.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1",
+    "webpack-merge": "^5.8.0"
+  },
   "scripts": {
     "clean": "rimraf lib",
-    "start": "node examples/server.js",
+    "start": "webpack serve --open --config examples/webpack.config.js",
     "lint": "eslint src",
     "build-examples": "rimraf examples/dist && eslint examples && set NODE_ENV=production && webpack --progress --hide-modules --config examples/webpack.build.js",
-    "build": "npm run clean && npm run lint && set NODE_ENV=production && webpack --progress --hide-modules --config webpack.build.js",
+    "build": "npm run clean && npm run lint && set NODE_ENV=production && webpack --progress --hide-modules --config webpack.prod.js",
     "test": "npm run lint"
   },
   "author": {
