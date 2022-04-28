@@ -1,5 +1,7 @@
 const path = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const webpack = require('webpack')
+
 module.exports = {
   entry: {
     'react-mobile-picker': './src/index.js',
@@ -34,11 +36,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
-      },
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
       },
     }),
   ],
