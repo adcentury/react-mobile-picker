@@ -1,9 +1,8 @@
 var path = require('path');
-var webpack = require('webpack');
 
 module.exports = {
   devtool: 'inline-source-map',
-
+  mode: 'development',
   entry: [
     'webpack-hot-middleware/client',
     path.join(__dirname, 'main.js')
@@ -16,11 +15,23 @@ module.exports = {
   },
 
   module: {
-    loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
-      {test: /\.less$/, loader: 'style!css!autoprefixer!less'}
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
     ]
   },
+    // loaders: [
+    //   {test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+    //   {test: /\.less$/, loader: 'style!css!autoprefixer!less'}
+    // ]
 
   resolve: {
     alias: {
@@ -29,8 +40,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
   ]
 };
