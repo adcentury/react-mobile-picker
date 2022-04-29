@@ -1,6 +1,13 @@
 # React Mobile Picker
 
-## 🚧 This fork of React Mobile Picker updates the package to use the latest versions of React, Babel, and Webpack.
+# 🚧 This fork of React Mobile Picker updates the package to use the latest versions of React, Babel, and Webpack.
+
+## Included Changes
+
+- Updated dependencies for React 17.0.2+ compatibility.
+- Updated to use Webpack 5.
+- Updated to use Babel 8.
+- Replaced express server in the examples with static webpack serve.
 
 ---
 

@@ -3,4 +3,4 @@ node_modules
 bower_components
 npm-debug.log
 
-examples/dist
+examples/__build__
