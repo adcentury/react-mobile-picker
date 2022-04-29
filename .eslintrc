@@ -9,7 +9,6 @@
     "strict": [2, "never"],
     "babel/new-cap": 1,
     "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2
   },
   "plugins": ["babel", "react"]
