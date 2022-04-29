@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin =require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -25,5 +26,11 @@ module.exports = {
       'react-mobile-picker': path.join(__dirname, '..', 'src')
     },
   },
- 
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '..', 'examples', 'index.html'),
+      filename: 'index.html',
+      chunks: ['index'],
+    }),
+  ],
 };
