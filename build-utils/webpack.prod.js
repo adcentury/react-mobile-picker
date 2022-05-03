@@ -8,7 +8,7 @@ module.exports = {
     filename: './lib/[name].js',
     library: {
       name: 'Picker',
-      target: 'umd',
+      type: 'umd',
     } 
   },
 }
