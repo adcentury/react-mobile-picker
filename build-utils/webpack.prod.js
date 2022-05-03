@@ -6,7 +6,9 @@ module.exports = {
   devtool: 'source-map',
   output: {
     filename: './lib/[name].js',
-    library: 'Picker',
-    libraryTarget: 'umd',
+    library: {
+      name: 'Picker',
+      target: 'umd',
+    } 
   },
 }
