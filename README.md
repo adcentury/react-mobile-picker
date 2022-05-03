@@ -6,7 +6,7 @@
 
 - Updated dependencies for React 17.0.2+ compatibility.
 - Updated to use Webpack 5.
-- Updated to use Babel 8.
+- Updated to use Babel 7.
 - Replaced express server in the examples with static webpack serve.
 
 ---
