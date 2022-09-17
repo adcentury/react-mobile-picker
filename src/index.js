@@ -10,7 +10,8 @@ class PickerColumn extends Component {
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    wheel: PropTypes.oneOf(['off', 'natural', 'normal']).isRequired
   };
 
   reference = React.createRef();
@@ -68,16 +69,12 @@ class PickerColumn extends Component {
   };
 
   handleWheel = (event) => {
-    console.log(event.deltaY);
-
     const {
-      options,
-      itemHeight
+      itemHeight,
+      wheel
     } = this.props;
 
     const {
-      minTranslate,
-      maxTranslate,
       scrollerTranslate
     } = this.state;
 
@@ -86,23 +83,18 @@ class PickerColumn extends Component {
       delta = itemHeight * Math.sign(delta);
     }
 
-    let nextScrollerTranslate = scrollerTranslate + delta;
-    if (nextScrollerTranslate < minTranslate) {
-      nextScrollerTranslate = minTranslate - Math.pow(minTranslate - nextScrollerTranslate, 0.8);
-    } else if (nextScrollerTranslate > maxTranslate) {
-      nextScrollerTranslate = maxTranslate + Math.pow(nextScrollerTranslate - maxTranslate, 0.8);
+    switch (wheel) {
+      case 'natural':
+        // ignore and continue
+        break;
+      case 'normal':
+        delta = delta * -1;
+        break;
+      default:
+        return;
     }
 
-    let activeIndex;
-    if (nextScrollerTranslate > maxTranslate) {
-      activeIndex = 0;
-    } else if (nextScrollerTranslate < minTranslate) {
-      activeIndex = options.length - 1;
-    } else {
-      activeIndex = -Math.floor((nextScrollerTranslate - maxTranslate) / itemHeight);
-    }
-
-    this.onValueSelected(options[activeIndex]);
+    this.onScrollerTranslateSettled(scrollerTranslate + delta);
   };
 
   handleTouchStart = (event) => {
@@ -118,6 +110,29 @@ class PickerColumn extends Component {
     if(!passiveEvents.includes(event._reactName)) {
       event.preventDefault();
     }
+  }
+
+  onScrollerTranslateSettled = (scrollerTranslate) => {
+    const {
+      options,
+      itemHeight
+    } = this.props;
+
+    const {
+      minTranslate,
+      maxTranslate,
+    } = this.state;
+
+    let activeIndex = 0;
+    if (scrollerTranslate >= maxTranslate) {
+      activeIndex = 0;
+    } else if (scrollerTranslate <= minTranslate) {
+      activeIndex = options.length - 1;
+    } else {
+      activeIndex = -Math.round((scrollerTranslate - maxTranslate) / itemHeight);
+    }
+
+    this.onValueSelected(options[activeIndex]);
   }
 
   handleTouchMove = (event) => {
@@ -152,17 +167,7 @@ class PickerColumn extends Component {
       startScrollerTranslate: 0
     });
     setTimeout(() => {
-      const {options, itemHeight} = this.props;
-      const {scrollerTranslate, minTranslate, maxTranslate} = this.state;
-      let activeIndex;
-      if (scrollerTranslate > maxTranslate) {
-        activeIndex = 0;
-      } else if (scrollerTranslate < minTranslate) {
-        activeIndex = options.length - 1;
-      } else {
-        activeIndex = - Math.floor((scrollerTranslate - maxTranslate) / itemHeight);
-      }
-      this.onValueSelected(options[activeIndex]);
+      this.onScrollerTranslateSettled(this.state.scrollerTranslate);
     }, 0);
   };
 
@@ -236,17 +241,19 @@ export default class Picker extends Component {
     onChange: PropTypes.func.isRequired,
     onClick: PropTypes.func,
     itemHeight: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    wheel: PropTypes.oneOf(['off', 'natural', 'normal'])
   };
 
   static defaultProps = {
     onClick: () => {},
     itemHeight: 36,
-    height: 216
+    height: 216,
+    wheel: 'off'
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick} = this.props;
+    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick, wheel} = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -262,7 +269,9 @@ export default class Picker extends Component {
           itemHeight={itemHeight}
           columnHeight={height}
           onChange={onChange}
-          onClick={onClick} />
+          onClick={onClick}
+          wheel={wheel}
+        />
       );
     }
     return (

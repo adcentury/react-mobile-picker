@@ -31,6 +31,11 @@ declare module "react-mobile-picker" {
          * Height of the picker. In px; default 216
          */
         height?: number;
+
+        /**
+         * Indicates the availibility and the direction of wheel change on the picker, `off`, `natural`, `normal`, default `off`
+         */
+        wheel?: 'off' | 'natural' | 'normal';
     }
 
     let ReactMobilePicker: React.ComponentClass<ReactMobilePickerProps>;
