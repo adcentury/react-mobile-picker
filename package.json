@@ -55,8 +55,8 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "peerDependencies": {
-    "react": ">=0.14.0 <17.0.0",
-    "react-dom": ">=0.14.0 <17.0.0"
+    "react": ">=0.14.0 <18.0.0",
+    "react-dom": ">=0.14.0 <18.0.0"
   },
   "scripts": {
     "clean": "rimraf lib",
