@@ -8,11 +8,7 @@ React Mobile Picker is a super simple component with no restriction, which means
 
 ## Preview
 
-![qr](./examples/qr.png)
-
-Scan this Qr in you mobile.
-
-Or visit (in mobile or mobile simulator): [http://adcentury.github.io/react-mobile-picker](http://adcentury.github.io/react-mobile-picker)
+Visit (in mobile or mobile simulator): [sparcs-kaist.github.io/taxi-react-mobile-picker](https://sparcs-kaist.github.io/taxi-react-mobile-picker/)
 
 ## Install
 
@@ -31,7 +27,7 @@ import Picker from "react-mobile-picker-mod";
 ### CommonJS
 
 ```javascript
-var Picker = require("react-mobile-picker-mod");
+const Picker = require("react-mobile-picker-mod");
 ```
 
 ## Props
