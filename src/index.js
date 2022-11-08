@@ -10,9 +10,11 @@ class PickerColumn extends Component {
     itemHeight: PropTypes.number.isRequired,
     columnHeight: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    wheel: PropTypes.oneOf(['off', 'natural', 'normal']).isRequired
   };
 
+  reference = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +23,22 @@ class PickerColumn extends Component {
       startScrollerTranslate: 0,
       ...this.computeTranslate(props)
     };
+  }
+
+  componentDidMount() {
+    this.reference.current.addEventListener('wheel', this.handleWheel);
+    this.reference.current.addEventListener('touchmove', this.handleTouchMove);
+    this.reference.current.addEventListener('touchstart', this.handleTouchStart);
+    this.reference.current.addEventListener('touchend', this.handleTouchEnd);
+    this.reference.current.addEventListener('touchcancel', this.handleTouchCancel);
+  }
+
+  componentWillUnmount() {
+    this.reference.current.removeEventListener('wheel', this.handleWheel);
+    this.reference.current.removeEventListener('touchmove', this.handleTouchMove);
+    this.reference.current.removeEventListener('touchstart', this.handleTouchStart);
+    this.reference.current.removeEventListener('touchend', this.handleTouchEnd);
+    this.reference.current.removeEventListener('touchcancel', this.handleTouchCancel);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +68,35 @@ class PickerColumn extends Component {
     this.props.onChange(this.props.name, newValue);
   };
 
+  handleWheel = (event) => {
+    const {
+      itemHeight,
+      wheel
+    } = this.props;
+
+    const {
+      scrollerTranslate
+    } = this.state;
+
+    var delta = event.deltaY * 0.1;
+    if (Math.abs(delta) < itemHeight) {
+      delta = itemHeight * Math.sign(delta);
+    }
+
+    switch (wheel) {
+      case 'natural':
+        // ignore and continue
+        break;
+      case 'normal':
+        delta = delta * -1;
+        break;
+      default:
+        return;
+    }
+
+    this.onScrollerTranslateSettled(scrollerTranslate + delta);
+  };
+
   handleTouchStart = (event) => {
     const startTouchY = event.targetTouches[0].pageY;
     this.setState(({scrollerTranslate}) => ({
@@ -63,6 +110,29 @@ class PickerColumn extends Component {
     if(!passiveEvents.includes(event._reactName)) {
       event.preventDefault();
     }
+  }
+
+  onScrollerTranslateSettled = (scrollerTranslate) => {
+    const {
+      options,
+      itemHeight
+    } = this.props;
+
+    const {
+      minTranslate,
+      maxTranslate,
+    } = this.state;
+
+    let activeIndex = 0;
+    if (scrollerTranslate >= maxTranslate) {
+      activeIndex = 0;
+    } else if (scrollerTranslate <= minTranslate) {
+      activeIndex = options.length - 1;
+    } else {
+      activeIndex = -Math.round((scrollerTranslate - maxTranslate) / itemHeight);
+    }
+
+    this.onValueSelected(options[activeIndex]);
   }
 
   handleTouchMove = (event) => {
@@ -97,17 +167,7 @@ class PickerColumn extends Component {
       startScrollerTranslate: 0
     });
     setTimeout(() => {
-      const {options, itemHeight} = this.props;
-      const {scrollerTranslate, minTranslate, maxTranslate} = this.state;
-      let activeIndex;
-      if (scrollerTranslate > maxTranslate) {
-        activeIndex = 0;
-      } else if (scrollerTranslate < minTranslate) {
-        activeIndex = options.length - 1;
-      } else {
-        activeIndex = - Math.floor((scrollerTranslate - maxTranslate) / itemHeight);
-      }
-      this.onValueSelected(options[activeIndex]);
+      this.onScrollerTranslateSettled(this.state.scrollerTranslate);
     }, 0);
   };
 
@@ -162,14 +222,11 @@ class PickerColumn extends Component {
       style.transitionDuration = '0ms';
     }
     return(
-      <div className="picker-column">
+      <div className="picker-column" ref={this.reference}>
         <div
           className="picker-scroller"
           style={style}
-          onTouchStart={this.handleTouchStart}
-          onTouchMove={this.handleTouchMove}
-          onTouchEnd={this.handleTouchEnd}
-          onTouchCancel={this.handleTouchCancel}>
+        >
           {this.renderItems()}
         </div>
       </div>
@@ -184,17 +241,19 @@ export default class Picker extends Component {
     onChange: PropTypes.func.isRequired,
     onClick: PropTypes.func,
     itemHeight: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    wheel: PropTypes.oneOf(['off', 'natural', 'normal'])
   };
 
   static defaultProps = {
     onClick: () => {},
     itemHeight: 36,
-    height: 216
+    height: 216,
+    wheel: 'off'
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick} = this.props;
+    const {optionGroups, valueGroups, itemHeight, height, onChange, onClick, wheel} = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -210,7 +269,9 @@ export default class Picker extends Component {
           itemHeight={itemHeight}
           columnHeight={height}
           onChange={onChange}
-          onClick={onClick} />
+          onClick={onClick}
+          wheel={wheel}
+        />
       );
     }
     return (

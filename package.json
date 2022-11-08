@@ -26,6 +26,7 @@
     "react ui",
     "mobile ui"
   ],
+  "types": "./src/index.d.ts",
   "devDependencies": {
     "autoprefixer-loader": "^3.1.0",
     "babel-core": "^6.3.17",
@@ -54,8 +55,8 @@
     "webpack-hot-middleware": "^2.6.0"
   },
   "peerDependencies": {
-    "react": ">=0.14.0 <17.0.0",
-    "react-dom": ">=0.14.0 <17.0.0"
+    "react": ">=0.14.0 <18.0.0",
+    "react-dom": ">=0.14.0 <18.0.0"
   },
   "scripts": {
     "clean": "rimraf lib",

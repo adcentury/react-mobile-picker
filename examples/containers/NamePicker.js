@@ -43,7 +43,9 @@ export default class NamePicker extends Component {
           <Picker
             optionGroups={optionGroups}
             valueGroups={valueGroups}
-            onChange={this.handleChange} />
+            onChange={this.handleChange}
+            wheel='normal'
+          />
         </div>
       </div>
     );
