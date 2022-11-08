@@ -38,12 +38,13 @@ var Picker = require('react-mobile-picker');
 
 | Property name | Type | Default | Description |
 | ------------- | ---- | ------- | ----------- |
-| optionGroups | Object | N/A | Key-value pairs as `{name1: options1, name2: options2}`. `options` is an array of all options for this name. |
-| valueGroups | Object | N/A | Selected value pairs as `{name1: value1, name2: value2}`. |
+| optionGroups | Object | N/A | Key-value pairs as `{ name1: options1, name2: options2 }`. `options` is an array of all options for this name. |
+| valueGroups | Object | N/A | Selected value pairs as `{ name1: value1, name2: value2 }`. |
 | onChange(name, value) | Function | N/A | Callback called when user pick a new value. |
 | onClick(name, value) | Function | N/A | Callback called when user click on selected value. |
-| itemHeight | Number | 36 | Height of each item (that is each option). In `px`. |
-| height | Number | 216 | Height of the picker. In `px`. |
+| itemHeight | Number | `36` | Height of each item (that is each option). In `px`. |
+| height | Number | `216` | Height of the picker. In `px`. |
+| wheel | String | `'off'` | Indicates the availibility and the direction of wheel change on the picker. Should be one of `'off'`, `'natural'` and `'normal'`. |
 
 ## Getting Started
 
