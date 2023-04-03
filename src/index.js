@@ -175,7 +175,7 @@ class PickerColumn extends Component {
     if (!this.state.isMoving) {
       return;
     }
-    this.setState((startScrollerTranslate) => ({
+    this.setState(({ startScrollerTranslate }) => ({
       isMoving: false,
       startTouchY: 0,
       startScrollerTranslate: 0,
