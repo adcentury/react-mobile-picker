@@ -3,8 +3,11 @@
 
   width: 100%;
 
-  &, *, *:before, *:after {
-    box-sizing: border-box;;
+  &,
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
   }
 
   .picker-inner {
@@ -16,7 +19,6 @@
     padding: 0 20px;
 
     font-size: 1.2em;
-    -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
   }
 
   .picker-column {
@@ -59,8 +61,9 @@
 
     pointer-events: none;
 
-    &:before, &:after {
-      content: ' ';
+    &:before,
+    &:after {
+      content: " ";
       position: absolute;
       left: 0;
       right: auto;
