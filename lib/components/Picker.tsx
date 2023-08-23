@@ -1,5 +1,4 @@
-import { HTMLProps, MutableRefObject, createContext, useCallback, useContext, useMemo, useReducer } from 'react'
-import styles from './styles.module.css'
+import { CSSProperties, HTMLProps, MutableRefObject, createContext, useCallback, useContext, useMemo, useReducer } from 'react'
 
 const DEFAULT_HEIGHT = 216
 const DEFAULT_ITEM_HEIGHT = 36
@@ -112,7 +111,7 @@ function pickerReducer(
 
 function PickerRoot(props: PickerRootProps) {
   const {
-    className,
+    style,
     children,
     value,
     onChange,
@@ -122,12 +121,28 @@ function PickerRoot(props: PickerRootProps) {
     ...restProps
   } = props
 
-  const highlightStyle = useMemo(() => ({
-    height: itemHeight,
-    marginTop: -(itemHeight / 2),
-  }), [itemHeight])
-  const containerStyle = useMemo(
-    () => ({ height: `${height}px` }),
+  const highlightStyle = useMemo<CSSProperties>(
+    () => ({
+      height: itemHeight,
+      marginTop: -(itemHeight / 2),
+      position: 'absolute',
+      top: '50%',
+      left: 0,
+      width: '100%',
+      pointerEvents: 'none',
+    }),
+    [itemHeight]
+  )
+  const containerStyle = useMemo<CSSProperties>(
+    () => ({
+      height: `${height}px`,
+      position: 'relative',
+      display: 'flex',
+      justifyContent: 'center',
+      overflow: 'hidden',
+      maskImage: 'linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent)',
+      WebkitMaskImage: 'linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent)',
+    }),
     [height]
   )
 
@@ -155,11 +170,10 @@ function PickerRoot(props: PickerRootProps) {
 
   return (
     <div
-      className={`
-        ${styles.container}
-        ${className || ''}
-      `}
-      style={containerStyle}
+      style={{
+        ...containerStyle,
+        ...style,
+      }}
       {...restProps}
     >
       <PickerActionsContext.Provider value={pickerActions}>
@@ -168,9 +182,35 @@ function PickerRoot(props: PickerRootProps) {
         </PickerDataContext.Provider>
       </PickerActionsContext.Provider>
       <div
-        className={styles.highlight}
         style={highlightStyle}
-      ></div>
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 'auto',
+            left: 0,
+            right: 'auto',
+            width: '100%',
+            height: '1px',
+            background: '#d9d9d9',
+            transform: 'scaleY(0.5)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: 'auto',
+            bottom: 0,
+            left: 0,
+            right: 'auto',
+            width: '100%',
+            height: '1px',
+            background: '#d9d9d9',
+            transform: 'scaleY(0.5)',
+          }}
+        />
+      </div>
     </div>
   )
 }

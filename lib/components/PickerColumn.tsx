@@ -1,6 +1,5 @@
-import { HTMLProps, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
+import { CSSProperties, HTMLProps, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { usePickerActions, usePickerData } from "./Picker"
-import styles from './styles.module.css'
 
 interface PickerColumnProps extends HTMLProps<HTMLDivElement> {
   name: string
@@ -24,9 +23,10 @@ export function useColumnData(componentName: string) {
 }
 
 function PickerColumn({
-  className,
+  style,
   children,
   name: key,
+  ...restProps
 }: PickerColumnProps) {
   const { height, itemHeight, wheelMode, value: groupValue, optionGroups } = usePickerData('Picker.Column')
 
@@ -197,21 +197,15 @@ function PickerColumn({
     }
   }, [handleTouchMove, handleWheel])
 
-  const style = useMemo(
-    () => {
-      const transformString = `translate3d(0, ${scrollerTranslate}px, 0)`
-      const s: { [key: string]: string } = {
-        MsTransform: transformString,
-        MozTransform: transformString,
-        OTransform: transformString,
-        WebkitTransform: transformString,
-        transform: transformString,
-      }
-      if (isMoving) {
-        s.transitionDuration = '0ms'
-      }
-      return s
-    },
+  const columnStyle = useMemo<CSSProperties>(
+    () => ({
+      flex: '1 1 0%',
+      maxHeight: '100%',
+      transitionProperty: 'transform',
+      transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+      transitionDuration: isMoving ? '0ms' : '300ms',
+      transform: `translate3d(0, ${scrollerTranslate}px, 0)`,
+    }),
     [scrollerTranslate, isMoving],
   )
 
@@ -222,15 +216,15 @@ function PickerColumn({
 
   return (
     <div
-      className={`
-        ${styles.container}
-        ${className || ''}
-      `}
-      style={style}
+      style={{
+        ...columnStyle,
+        ...style,
+      }}
       ref={containerRef}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}
+      {...restProps}
     >
       <PickerColumnDataContext.Provider value={columnData}>
         {children}

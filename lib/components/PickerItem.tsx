@@ -1,7 +1,6 @@
 import { HTMLProps, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 import { usePickerActions, usePickerData } from './Picker'
 import { useColumnData } from './PickerColumn'
-import styles from './styles.module.css'
 
 interface PickerItemRenderProps {
   selected: boolean
@@ -18,9 +17,10 @@ function isFunction(functionToCheck: any): functionToCheck is Function {
 }
 
 function PickerItem({
-  className,
+  style,
   children,
   value,
+  ...restProps
 }: PickerItemProps) {
   const optionRef = useRef<HTMLDivElement | null>(null)
   const { itemHeight, value: pickerValue } = usePickerData('Picker.Item')
@@ -32,9 +32,12 @@ function PickerItem({
     [key, pickerActions, value],
   )
 
-  const style = useMemo(
+  const itemStyle = useMemo(
     () => ({
       height: `${itemHeight}px`,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     }),
     [itemHeight],
   )
@@ -45,13 +48,13 @@ function PickerItem({
 
   return (
     <div
-      className={`
-        ${styles.container}
-        ${className || ''}
-      `}
-      style={style}
+      style={{
+        ...itemStyle,
+        ...style,
+      }}
       ref={optionRef}
       onClick={handleClick}
+      {...restProps}
     >
       {isFunction(children) ? children({ selected: pickerValue[key] === value }) : children}
     </div>
