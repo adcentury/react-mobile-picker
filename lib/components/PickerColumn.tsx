@@ -154,7 +154,7 @@ function PickerColumn({
 
     const nextScrollerTranslate = scrollerTranslate + delta
     updateScrollerWhileMoving(nextScrollerTranslate)
-  }, [itemHeight, scrollerTranslate, updateScrollerWhileMoving])
+  }, [itemHeight, scrollerTranslate, updateScrollerWhileMoving, wheelMode])
 
   const handleWheelEnd = useCallback(() => {
     handleScrollerTranslateSettled()

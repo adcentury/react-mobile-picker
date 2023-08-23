@@ -12,7 +12,8 @@ export interface PickerItemProps extends Omit<HTMLProps<HTMLDivElement>, 'value'
   value: string
 }
 
-function isFunction(functionToCheck: any): functionToCheck is Function {
+// eslint-disable-next-line
+function isFunction(functionToCheck: any): boolean {
   return typeof functionToCheck === 'function'
 }
 

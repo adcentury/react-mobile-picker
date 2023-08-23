@@ -2,16 +2,41 @@
   "name": "react-mobile-picker",
   "version": "1.0.0",
   "description": "An iOS like select box component for React",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/react-mobile-picker.umd.cjs",
+  "module": "./dist/react-mobile-picker.js",
+  "typings": "./dist/react-mobile-picker.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/react-mobile-picker.js",
+      "require": "./dist/react-mobile-picker.umd.cjs"
+    }
+  },
+  "repository": "https://github.com/adcentury/react-mobile-picker",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build:lib": "tsc && vite build",
     "build:examples": "tsc && vite build --config vite.config.examples.ts",
     "lint": "eslint lib examples --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "lib/**/*.{ts,tsx}": [
+      "eslint --fix"
+    ],
+    "examples/**/*.{ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "peerDependencies": {
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^16 || ^17 || ^18",
+    "react-dom": "^16 || ^17 || ^18"
   },
   "devDependencies": {
     "@headlessui/react": "^1.7.17",
@@ -26,7 +51,9 @@
     "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
+    "husky": "^8.0.3",
     "less": "^4.1.3",
+    "lint-staged": "^14.0.1",
     "postcss": "^8.4.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -34,17 +61,5 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.0",
     "vite-plugin-dts": "^3.3.1"
-  },
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/react-mobile-picker.umd.cjs",
-  "module": "./dist/react-mobile-picker.js",
-  "exports": {
-    ".": {
-      "import": "./dist/react-mobile-picker.js",
-      "require": "./dist/react-mobile-picker.umd.cjs"
-    }
   }
 }

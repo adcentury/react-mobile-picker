@@ -16,7 +16,7 @@ export interface PickerValue {
 
 export interface PickerRootProps extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
   value: PickerValue
-  onChange(value: PickerValue, key: string): void
+  onChange: (value: PickerValue, key: string) => void
   height?: number
   itemHeight?: number
   wheelMode?: 'off' | 'natural' | 'normal'
@@ -135,7 +135,7 @@ function PickerRoot(props: PickerRootProps) {
 
   const pickerData = useMemo(
     () => ({ height, itemHeight, wheelMode, value, optionGroups }),
-    [height, itemHeight, value, optionGroups]
+    [height, itemHeight, value, optionGroups, wheelMode]
   )
   
   const triggerChange = useCallback((key: string, nextValue: string) => {
