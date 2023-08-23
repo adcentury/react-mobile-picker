@@ -13,11 +13,15 @@ export interface PickerItemProps extends Omit<HTMLProps<HTMLDivElement>, 'value'
 }
 
 // eslint-disable-next-line
-function isFunction(functionToCheck: any): boolean {
+function isFunction(functionToCheck: any): functionToCheck is Function {
   return typeof functionToCheck === 'function'
 }
 
-function PickerItem({ children, value }: PickerItemProps) {
+function PickerItem({
+  className,
+  children,
+  value,
+}: PickerItemProps) {
   const optionRef = useRef<HTMLDivElement | null>(null)
   const { itemHeight, value: pickerValue } = usePickerData('Picker.Item')
   const pickerActions = usePickerActions('Picker.Item')
@@ -41,8 +45,13 @@ function PickerItem({ children, value }: PickerItemProps) {
 
   return (
     <div
-      className={styles.item}
-      style={style} ref={optionRef} onClick={handleClick}
+      className={`
+        ${styles.container}
+        ${className || ''}
+      `}
+      style={style}
+      ref={optionRef}
+      onClick={handleClick}
     >
       {isFunction(children) ? children({ selected: pickerValue[key] === value }) : children}
     </div>

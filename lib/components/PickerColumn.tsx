@@ -24,6 +24,7 @@ export function useColumnData(componentName: string) {
 }
 
 function PickerColumn({
+  className,
   children,
   name: key,
 }: PickerColumnProps) {
@@ -221,7 +222,10 @@ function PickerColumn({
 
   return (
     <div
-      className={styles.column}
+      className={`
+        ${styles.container}
+        ${className || ''}
+      `}
       style={style}
       ref={containerRef}
       onTouchStart={handleTouchStart}
