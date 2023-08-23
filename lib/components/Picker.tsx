@@ -13,9 +13,9 @@ export interface PickerValue {
   [key: string]: string
 }
 
-export interface PickerRootProps extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
-  value: PickerValue
-  onChange: (value: PickerValue, key: string) => void
+export interface PickerRootProps<TType extends PickerValue> extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
+  value: TType
+  onChange: (value: TType, key: string) => void
   height?: number
   itemHeight?: number
   wheelMode?: 'off' | 'natural' | 'normal'
@@ -109,7 +109,7 @@ function pickerReducer(
   }
 }
 
-function PickerRoot(props: PickerRootProps) {
+function PickerRoot<TType extends PickerValue>(props: PickerRootProps<TType>) {
   const {
     style,
     children,

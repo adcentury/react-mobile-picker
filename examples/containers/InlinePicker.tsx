@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Picker, { PickerValue } from 'react-mobile-picker'
+import Picker from 'react-mobile-picker'
 
 function renderOptions(options: string[], selectedColor: string) {
   return options.map((option) => (
@@ -12,7 +12,7 @@ function renderOptions(options: string[], selectedColor: string) {
 }
 
 export default function InlinePicker() {
-  const [pickerValue, setPickerValue] = useState<PickerValue>({
+  const [pickerValue, setPickerValue] = useState({
     title: 'Mr.',
     firstName: 'Micheal',
     lastName: 'Jordan'
