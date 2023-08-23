@@ -11,7 +11,7 @@ interface Option {
 }
 
 export interface PickerValue {
-  [key: string]: any
+  [key: string]: string
 }
 
 export interface PickerRootProps extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {

@@ -1,19 +1,31 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Picker, { PickerValue } from 'react-mobile-picker'
 
 function getDayArray(year: number, month: number) {
   const dayCount = new Date(year, month, 0).getDate()
-  return Array.from({ length: dayCount }, (_, i) => i + 1)
+  return Array.from({ length: dayCount }, (_, i) => String(i + 1).padStart(2, '0'))
 }
 
 export default function ModalPicker() {
   const [isOpen, setIsOpen] = useState(false)
   const [pickerValue, setPickerValue] = useState<PickerValue>({
-    year: 1989,
-    month: 8,
-    day: 12,
+    year: '1989',
+    month: '08',
+    day: '12',
   })
+
+  const handlePickerChange = useCallback((newValue: PickerValue, key: string) => {
+    if (key === 'day' ) {
+      setPickerValue(newValue)
+      return
+    }
+
+    const { year, month } = newValue
+    const newDayArray = getDayArray(Number(year), Number(month))
+    const newDay = newDayArray.includes(newValue.day) ? newValue.day : newDayArray[newDayArray.length - 1]
+    setPickerValue({ ...newValue, day: newDay })
+  }, [])
 
   return (
     <>
@@ -60,11 +72,11 @@ export default function ModalPicker() {
                   <div className="mt-2">
                     <Picker
                       value={pickerValue}
-                      onChange={setPickerValue}
+                      onChange={handlePickerChange}
                       wheelMode="natural"
                     >
                       <Picker.Column name="year">
-                        { Array.from({ length: 100 }, (_, i) => 1923 + i).map((year) => (
+                        { Array.from({ length: 100 }, (_, i) => `${1923 + i}`).map((year) => (
                           <Picker.Item key={year} value={year}>
                             {({ selected }) => (
                               <div className={selected ? 'font-semibold text-neutral-900' : 'text-neutral-400'}>{year}</div>
@@ -73,7 +85,7 @@ export default function ModalPicker() {
                         ))}
                       </Picker.Column>
                       <Picker.Column name="month">
-                        { Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                        { Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0')).map((month) => (
                           <Picker.Item key={month} value={month}>
                             {({ selected }) => (
                               <div className={selected ? 'font-semibold text-neutral-900' : 'text-neutral-400'}>{month}</div>
@@ -82,7 +94,7 @@ export default function ModalPicker() {
                         ))}
                       </Picker.Column>
                       <Picker.Column name="day">
-                        { getDayArray(pickerValue.year, pickerValue.month).map((day) => (
+                        { getDayArray(Number(pickerValue.year), Number(pickerValue.month)).map((day) => (
                           <Picker.Item key={day} value={day}>
                             {({ selected }) => (
                               <div className={selected ? 'font-semibold text-neutral-900' : 'text-neutral-400'}>{day}</div>
