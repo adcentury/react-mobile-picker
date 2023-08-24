@@ -9,7 +9,7 @@
 
 React Mobile Picker is a super simple component like iOS picker for React. It's almost unstyled, so you can easily customize it as you like.
 
-![screen-capture](./examples/assets/screen-capture.gif)
+<img src="./examples/assets/screen-capture.gif" alt="screen capture" width="300" style="border: 1px solid #cdcdcd" />
 
 ## Preview
 
@@ -29,7 +29,7 @@ or
 yarn add react-mobile-picker
 ```
 
-## Usage
+## Basic usage
 
 By design, React Mobile Picker is a [controlled component](https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components), which means the selected items of the rendered element will always reflect the `value` prop. Every time you want to change the selected items, just modify the `value` prop.
 
