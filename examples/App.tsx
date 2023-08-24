@@ -7,7 +7,7 @@ function App() {
       className="text-center text-2xl text-blue-700 font-bold py-4"
     >React Mobile Picker</header>
     <section className="px-4">
-      {/* <p className="mb-2">React Mobile Picker is a super simple component like iOS picker for React. It's almost unstyled, so you can easily customize it as you like.</p> */}
+      <p className="mb-2">React Mobile Picker is a super simple component like iOS picker for React. It's almost unstyled, so you can easily customize it as you like.</p>
       <p className="mb-2">Here are two examples:</p>
     </section>
     <section>
