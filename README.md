@@ -1,6 +1,6 @@
 # React Mobile Picker
 
-![version](https://img.shields.io/npm/v/react-mobile-picker)
+[![version](https://img.shields.io/npm/v/react-mobile-picker)](https://www.npmjs.org/package/react-mobile-picker)
 ![language](https://img.shields.io/github/languages/top/adcentury/react-mobile-picker)
 [![npm download](https://img.shields.io/npm/dm/react-mobile-picker.svg?style=flat-square)](https://www.npmjs.org/package/react-mobile-picker)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/react-mobile-picker)
