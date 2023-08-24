@@ -1,108 +1,170 @@
 # React Mobile Picker
 
-[![Travis](https://travis-ci.org/adcentury/react-mobile-picker.svg?branch=master)](https://travis-ci.org/adcentury/react-mobile-picker) [![npm](https://img.shields.io/npm/dm/react-mobile-picker.svg)](https://www.npmjs.com/package/react-mobile-picker) [![GitHub license](https://img.shields.io/github/license/adcentury/react-mobile-picker.svg)](https://github.com/adcentury/react-mobile-picker/blob/master/LICENSE)
+![version](https://img.shields.io/npm/v/react-mobile-picker)
+![language](https://img.shields.io/github/languages/top/adcentury/react-mobile-picker)
+[![npm download](https://img.shields.io/npm/dm/react-mobile-picker.svg?style=flat-square)](https://www.npmjs.org/package/react-mobile-picker)
+![npm bundle size](https://img.shields.io/bundlephobia/min/react-mobile-picker)
+![npm bundle size zip](https://img.shields.io/bundlephobia/minzip/react-mobile-picker)
+![license](https://img.shields.io/npm/l/react-mobile-picker)
 
-React Mobile Picker is a super simple component with no restriction, which means you can use it in any way you want.
+React Mobile Picker is a super simple component like iOS picker for React. It's almost unstyled, so you can easily customize it as you like.
 
-![screen-capture](./examples/screen-capture.gif)
+<kbd><img src="./examples/assets/screen-capture.gif" alt="screen capture" width="300" /></kbd>
 
 ## Preview
 
-![qr](./examples/qr.png)
+![qr](./examples/assets/qr.jpg)
 
 Scan this Qr in you mobile.
 
-Or visit (in mobile or mobile simulator): [http://adcentury.github.io/react-mobile-picker](http://adcentury.github.io/react-mobile-picker)
+Or visit (in mobile or mobile simulator): [https://react-mobile-picker.vercel.app](https://react-mobile-picker.vercel.app)
 
-## Install
+## Installation
 
+```bash
+npm install react-mobile-picker
 ```
-npm install react-mobile-picker --save
-```
-
-## Usage
-
-### ES6
-
-```javascript
-import Picker from 'react-mobile-picker';
+or
+```bash
+yarn add react-mobile-picker
 ```
 
-### CommonJS
+## Basic usage
 
-```javascript
-var Picker = require('react-mobile-picker');
-```
+By design, React Mobile Picker is a [controlled component](https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components), which means the selected items of the rendered element will always reflect the `value` prop. Every time you want to change the selected items, just modify the `value` prop.
 
-## Props
+```jsx
+import { useState } from 'react'
+import Picker from 'react-mobile-picker'
 
-| Property name | Type | Default | Description |
-| ------------- | ---- | ------- | ----------- |
-| optionGroups | Object | N/A | Key-value pairs as `{ name1: options1, name2: options2 }`. `options` is an array of all options for this name. |
-| valueGroups | Object | N/A | Selected value pairs as `{ name1: value1, name2: value2 }`. |
-| onChange(name, value) | Function | N/A | Callback called when user pick a new value. |
-| onClick(name, value) | Function | N/A | Callback called when user click on selected value. |
-| itemHeight | Number | `36` | Height of each item (that is each option). In `px`. |
-| height | Number | `216` | Height of the picker. In `px`. |
-| wheel | String | `'off'` | Indicates the availibility and the direction of wheel change on the picker. Should be one of `'off'`, `'natural'` and `'normal'`. |
+const selections = {
+  title: ['Mr.', 'Mrs.', 'Ms.', 'Dr.'],
+  firstName: ['John', 'Micheal', 'Elizabeth'],
+  lastName: ['Lennon', 'Jackson', 'Jordan', 'Legend', 'Taylor']
+}
 
-## Getting Started
+function MyPicker() {
+  const [pickerValue, setPickerValue] = useState({
+    title: 'Mr.',
+    firstName: 'Micheal',
+    lastName: 'Jordan'
+  })
 
-By design, React Mobile Picker is a [Controlled Component](https://facebook.github.io/react/docs/forms.html#controlled-components), which means the selected value of the rendered element will always reflect the `valueGroups`. Every time you want to change the selected item, just modify `valueGroups` values.
-
-Here is an example of how to integrate React Mobile Picker:
-
-```javascript
-import React, {Component} from 'react';
-import Picker from 'react-mobile-picker';
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      valueGroups: {
-        title: 'Mr.',
-        firstName: 'Micheal',
-        secondName: 'Jordan'
-      }, 
-      optionGroups: {
-        title: ['Mr.', 'Mrs.', 'Ms.', 'Dr.'],
-        firstName: ['John', 'Micheal', 'Elizabeth'],
-        secondName: ['Lennon', 'Jackson', 'Jordan', 'Legend', 'Taylor']
-      }
-    };
-  }
-
-  // Update the value in response to user picking event
-  handleChange = (name, value) => {
-    this.setState(({valueGroups}) => ({
-      valueGroups: {
-        ...valueGroups,
-        [name]: value
-      }
-    }));
-  };
-
-  render() {
-    const {optionGroups, valueGroups} = this.state;
-
-    return (
-      <Picker
-        optionGroups={optionGroups}
-        valueGroups={valueGroups}
-        onChange={this.handleChange} />
-    );
-  }
+  return (
+    <Picker value={pickerValue} onChange={setPickerValue}>
+      {Object.keys(selections).map(name => (
+        <Picker.Column key={name} name={name}>
+          {selections[name].map(option => (
+            <Picker.Item key={option} value={option}>
+              {option}
+            </Picker.Item>
+          ))}
+        </Picker.Column>
+      ))}
+    </Picker>
+  )
 }
 ```
 
-## More Examples
+## Using render props
 
+Each `Picker.Item` component exposes a `selected` state that can be used to customize the appearance of the item. This is called the [render props](https://legacy.reactjs.org/docs/render-props.html) technique.
+
+```jsx
+import { useState } from 'react'
+import { Picker } from 'react-mobile-picker'
+
+function MyPicker() {
+  const [pickerValue, setPickerValue] = useState({
+    name1: 'item1',
+    /* ... */
+  })
+
+  return (
+    <Picker value={pickerValue} onChange={setPickerValue}>
+      <Picker.Column name="name1">
+        <Picker.Item value="item1">
+          {({ selected }) => (
+            /* Use the `selected` state ti conditionally style the selected item */
+            <div style={{ color: selected ? 'red' : 'black' }}>
+              Item 1
+            </div>
+          )}
+        </Picker.Item>
+        {/* ... */}
+      </Picker.Column>
+      {/* ... */}
+    </Picker>
+  )
+}
 ```
+
+## Support wheel scrolling
+
+React Mobile Picker is designed to be used on mobile devices, but it can also support wheel scrolling on desktop browsers. To enable this feature, you can set the `wheel` prop to either `'natural'` or `'normal'`.
+
+```jsx
+import { useState } from 'react'
+import { Picker } from 'react-mobile-picker'
+
+function MyPicker() {
+  const [pickerValue, setPickerValue] = useState({
+    name1: 'item1',
+    /* ... */
+  })
+
+  return (
+    <Picker value={pickerValue} onChange={setPickerValue} wheel="natural">
+      {/* ... */}
+    </Picker>
+  )
+}
+```
+
+## Component API
+
+### Picker
+
+the main Picker container component.
+
+| Prop | Default | Description |
+| :---- | :------- | :----------- |
+| value | N/A | `{ [name: string]: string }`<br />Selected value pairs |
+| onChange | N/A | `(value: T, key: string) => void`<br />Callback function when the selected value changes |
+| height | 216 | `number`<br />Height of the picker in `px` |
+| itemHeight | 36 | `number`<br />Height of each item (that is each option) in `px` |
+| wheel | `'off'` | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers |
+
+### Picker.Column
+
+The wrapper component for each column.
+
+| Prop | Default | Description |
+| :---- | :------- | :----------- |
+| name | N/A | `string`<br />The name should be one of the keys of the `value` in `Picker` component |
+
+### Picker.Item
+
+The wrapper component for each selectable option.
+
+| Prop | Default | Description |
+| :---- | :------- | :----------- |
+| value | N/A | `string`<br />The value of the current option |
+
+| Render Prop | Description |
+| :----------- | :----------- |
+| selected | `boolean`<br />Whether or not the current option is selected |
+
+## More examples
+
+You can check out the [examples](./examples) folder for more code samples. Or run this project locally:
+
+```bash
 git clone this repo
-npm install
-npm start
-point your browser to http://localhost:8080
+cd react-mobile-picker
+pnpm i
+pnpm run dev
+point your browser to http://localhost:5173
 ```
 
 ## License
