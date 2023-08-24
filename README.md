@@ -127,11 +127,33 @@ function MyPicker() {
 
 the main Picker container component.
 
-| Prop | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| value | `Object` | N/A | Selected value pairs as `{ name1: value1, name2: value2 }` |
-| onChange | `(value: Object, key: string) => void` |
+| Prop | Default | Description |
+| ---- | ------- | ----------- |
+| value | N/A | `{ [name: string]: string }`<br />Selected value pairs |
+| onChange | N/A | `(value: T, key: string) => void`<br />Callback function when the selected value changes |
+| height | 216 | `number`<br />Height of the picker in `px` |
+| itemHeight | 36 | `number`<br />Height of each item (that is each option) in `px` |
+| wheel | `'off'` | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers |
 
+### Picker.Column
+
+The wrapper component for each column.
+
+| Prop | Default | Description |
+| ---- | ------- | ----------- |
+| name | N/A | `string`<br />The name of the column, should be one of the keys of the `value` in the `Picker` component |
+
+### Picker.Item
+
+The wrapper component for each selectable option.
+
+| Prop | Default | Description |
+| ---- | ------- | ----------- |
+| value | N/A | `string`<br />The value of the current option |
+
+| Render Prop | Description |
+| ----------- | ----------- |
+| selected | `boolean`<br />Whether or not the current option is selected |
 
 ## More examples
 
