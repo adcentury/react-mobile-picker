@@ -9,7 +9,7 @@
 
 React Mobile Picker is a super simple component like iOS picker for React. It's almost unstyled, so you can easily customize it as you like.
 
-<img src="./examples/assets/screen-capture.gif" alt="screen capture" width="300" style="border: 1px solid #cdcdcd" />
+<kbd><img src="./examples/assets/screen-capture.gif" alt="screen capture" width="300" /></kbd>
 
 ## Preview
 
