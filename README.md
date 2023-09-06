@@ -167,6 +167,10 @@ pnpm run dev
 point your browser to http://localhost:5173
 ```
 
+## Author
+
+Adcent Lei ([@adcentlei](https://twitter.com/adcentlei))
+
 ## License
 
 MIT.
