@@ -101,7 +101,7 @@ function MyPicker() {
 
 ## Support wheel scrolling
 
-React Mobile Picker is designed to be used on mobile devices, but it can also support wheel scrolling on desktop browsers. To enable this feature, you can set the `wheel` prop to either `'natural'` or `'normal'`.
+React Mobile Picker is designed to be used on mobile devices, but it can also support wheel scrolling on desktop browsers. To enable this feature, you can set the `wheelMode` prop to either `'natural'` or `'normal'`.
 
 ```jsx
 import { useState } from 'react'
@@ -114,7 +114,7 @@ function MyPicker() {
   })
 
   return (
-    <Picker value={pickerValue} onChange={setPickerValue} wheel="natural">
+    <Picker value={pickerValue} onChange={setPickerValue} wheelMode="natural">
       {/* ... */}
     </Picker>
   )
@@ -133,7 +133,7 @@ the main Picker container component.
 | onChange | N/A | `(value: T, key: string) => void`<br />Callback function when the selected value changes |
 | height | 216 | `number`<br />Height of the picker in `px` |
 | itemHeight | 36 | `number`<br />Height of each item (that is each option) in `px` |
-| wheel | `'off'` | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers |
+| wheelMode | `'off'` | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers |
 
 ### Picker.Column
 
