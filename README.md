@@ -72,7 +72,7 @@ Each `Picker.Item` component exposes a `selected` state that can be used to cust
 
 ```jsx
 import { useState } from 'react'
-import { Picker } from 'react-mobile-picker'
+import Picker from 'react-mobile-picker'
 
 function MyPicker() {
   const [pickerValue, setPickerValue] = useState({
@@ -105,7 +105,7 @@ React Mobile Picker is designed to be used on mobile devices, but it can also su
 
 ```jsx
 import { useState } from 'react'
-import { Picker } from 'react-mobile-picker'
+import Picker from 'react-mobile-picker'
 
 function MyPicker() {
   const [pickerValue, setPickerValue] = useState({
