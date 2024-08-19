@@ -5,12 +5,12 @@ const DEFAULT_ITEM_HEIGHT = 36
 const DEFAULT_WHEEL_MODE = 'off'
 
 interface Option {
-  value: string
+  value: string | number
   element: MutableRefObject<HTMLElement | null>
 }
 
 export interface PickerValue {
-  [key: string]: string
+  [key: string]: string | number
 }
 
 export interface PickerRootProps<TType extends PickerValue> extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'onChange'> {
@@ -44,7 +44,7 @@ export function usePickerData(componentName: string) {
 
 const PickerActionsContext = createContext<{
   registerOption(key: string, option: Option): () => void
-  change(key: string, value: string): boolean
+  change(key: string, value: string | number): boolean
 } | null>(null)
 PickerActionsContext.displayName = 'PickerActionsContext'
 

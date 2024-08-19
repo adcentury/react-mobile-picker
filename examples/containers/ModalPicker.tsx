@@ -23,7 +23,7 @@ export default function ModalPicker() {
 
     const { year, month } = newValue
     const newDayArray = getDayArray(Number(year), Number(month))
-    const newDay = newDayArray.includes(newValue.day) ? newValue.day : newDayArray[newDayArray.length - 1]
+    const newDay = newDayArray.includes(newValue.day as string) ? newValue.day : newDayArray[newDayArray.length - 1]
     setPickerValue({ ...newValue, day: newDay })
   }, [])
 
