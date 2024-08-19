@@ -8,7 +8,7 @@ interface PickerItemRenderProps {
 
 export interface PickerItemProps extends Omit<HTMLProps<HTMLDivElement>, 'value' | 'children'> {
   children: ReactNode | ((renderProps: PickerItemRenderProps) => ReactNode)
-  value: string
+  value: string | number
 }
 
 // eslint-disable-next-line
