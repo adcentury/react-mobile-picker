@@ -23,7 +23,7 @@ function PickerItem({
   ...restProps
 }: PickerItemProps) {
   const optionRef = useRef<HTMLDivElement | null>(null)
-  const { itemHeight, value: pickerValue } = usePickerData('Picker.Item')
+  const { itemHeight, value: pickerValue, mouseMode } = usePickerData('Picker.Item')
   const pickerActions = usePickerActions('Picker.Item')
   const { key } = useColumnData('Picker.Item')
 
@@ -43,6 +43,7 @@ function PickerItem({
   )
 
   const handleClick = useCallback(() => {
+    if (mouseMode === 'drag') return
     pickerActions.change(key, value)
   }, [pickerActions, key, value])
 

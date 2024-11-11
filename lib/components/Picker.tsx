@@ -3,6 +3,7 @@ import { CSSProperties, HTMLProps, MutableRefObject, createContext, useCallback,
 const DEFAULT_HEIGHT = 216
 const DEFAULT_ITEM_HEIGHT = 36
 const DEFAULT_WHEEL_MODE = 'off'
+const DEFAULT_MOUSE_MODE = 'click'
 
 interface Option {
   value: string | number
@@ -19,12 +20,14 @@ export interface PickerRootProps<TType extends PickerValue> extends Omit<HTMLPro
   height?: number
   itemHeight?: number
   wheelMode?: 'off' | 'natural' | 'normal'
+  mouseMode?: 'drag' | 'click'
 }
 
 const PickerDataContext = createContext<{
   height: number
   itemHeight: number
   wheelMode: 'off' | 'natural' | 'normal'
+  mouseMode: 'drag' | 'click'
   value: PickerValue
   optionGroups: { [key: string]: Option[] }
 } | null>(null)
@@ -118,6 +121,7 @@ function PickerRoot<TType extends PickerValue>(props: PickerRootProps<TType>) {
     height = DEFAULT_HEIGHT,
     itemHeight = DEFAULT_ITEM_HEIGHT,
     wheelMode = DEFAULT_WHEEL_MODE,
+    mouseMode= DEFAULT_MOUSE_MODE,
     ...restProps
   } = props
 
@@ -149,8 +153,8 @@ function PickerRoot<TType extends PickerValue>(props: PickerRootProps<TType>) {
   const [optionGroups, dispatch] = useReducer(pickerReducer, {})
 
   const pickerData = useMemo(
-    () => ({ height, itemHeight, wheelMode, value, optionGroups }),
-    [height, itemHeight, value, optionGroups, wheelMode]
+    () => ({ height, itemHeight, wheelMode, value, optionGroups, mouseMode }),
+    [height, itemHeight, value, optionGroups, wheelMode, mouseMode]
   )
   
   const triggerChange = useCallback((key: string, nextValue: string) => {
