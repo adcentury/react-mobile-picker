@@ -19,6 +19,7 @@ export interface PickerRootProps<TType extends PickerValue> extends Omit<HTMLPro
   height?: number
   itemHeight?: number
   wheelMode?: 'off' | 'natural' | 'normal'
+  disableHighlight?: boolean
 }
 
 const PickerDataContext = createContext<{
@@ -115,6 +116,7 @@ function PickerRoot<TType extends PickerValue>(props: PickerRootProps<TType>) {
     children,
     value,
     onChange,
+    disableHighlight,
     height = DEFAULT_HEIGHT,
     itemHeight = DEFAULT_ITEM_HEIGHT,
     wheelMode = DEFAULT_WHEEL_MODE,
@@ -192,7 +194,7 @@ function PickerRoot<TType extends PickerValue>(props: PickerRootProps<TType>) {
             left: 0,
             right: 'auto',
             width: '100%',
-            height: '1px',
+            height: {disableHighlight ? '0px' :'1px'},
             background: '#d9d9d9',
             transform: 'scaleY(0.5)',
           }}
@@ -205,7 +207,7 @@ function PickerRoot<TType extends PickerValue>(props: PickerRootProps<TType>) {
             left: 0,
             right: 'auto',
             width: '100%',
-            height: '1px',
+            height: {disableHighlight ? '0px' :'1px'},
             background: '#d9d9d9',
             transform: 'scaleY(0.5)',
           }}
