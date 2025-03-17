@@ -6,6 +6,7 @@ name: Publish to npm
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   build:
