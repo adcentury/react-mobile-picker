@@ -28,7 +28,7 @@ function PickerColumn({
   name: key,
   ...restProps
 }: PickerColumnProps) {
-  const { height, itemHeight, wheelMode, value: groupValue, optionGroups } = usePickerData('Picker.Column')
+  const { height, itemHeight, wheelMode, value: groupValue, optionGroups, mouseMode } = usePickerData('Picker.Column')
 
   // Caculate the selected index
   const value = useMemo(
@@ -103,6 +103,21 @@ function PickerColumn({
     setStartTouchY(event.targetTouches[0].pageY)
     setStartScrollerTranslate(scrollerTranslate)
   }, [scrollerTranslate])
+
+  const handleMouseStart = useCallback((event: React.MouseEvent) => {
+    if (mouseMode === 'click') return
+
+    setIsMoving(true)
+    setStartTouchY(event.pageY)
+    setStartScrollerTranslate(scrollerTranslate)
+  }, [scrollerTranslate])
+
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    if (event.cancelable) event.preventDefault()
+    if (!isMoving || mouseMode === 'click') return
+
+    updateScrollerWhileMoving(startScrollerTranslate + event.pageY - startTouchY)
+  }, [isMoving, startScrollerTranslate, startTouchY, updateScrollerWhileMoving])
 
   const handleTouchMove = useCallback((event: TouchEvent) => {
     if (event.cancelable) {
@@ -188,11 +203,13 @@ function PickerColumn({
     if (container) {
       container.addEventListener('touchmove', handleTouchMove, { passive: false })
       container.addEventListener('wheel', handleWheel, { passive: false })
+      container.addEventListener('mousemove', handleMouseMove, { passive: false })
     }
     return () => {
       if (container) {
         container.removeEventListener('touchmove', handleTouchMove)
         container.removeEventListener('wheel', handleWheel)
+        container.removeEventListener('mousemove', handleMouseMove)
       }
     }
   }, [handleTouchMove, handleWheel])
@@ -205,6 +222,7 @@ function PickerColumn({
       transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
       transitionDuration: isMoving ? '0ms' : '300ms',
       transform: `translate3d(0, ${scrollerTranslate}px, 0)`,
+      ...(mouseMode === 'drag' && { cursor: 'grab', userSelect: 'none' }),
     }),
     [scrollerTranslate, isMoving],
   )
@@ -221,6 +239,9 @@ function PickerColumn({
         ...style,
       }}
       ref={containerRef}
+      onMouseDown={handleMouseStart}
+      onMouseUp={handleTouchEnd}
+      onMouseLeave={handleTouchCancel}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchCancel}

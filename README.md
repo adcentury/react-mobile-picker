@@ -127,13 +127,14 @@ function MyPicker() {
 
 the main Picker container component.
 
-| Prop | Default | Description |
-| :---- | :------- | :----------- |
-| value | N/A | `{ [name: string]: string }`<br />Selected value pairs |
-| onChange | N/A | `(value: T, key: string) => void`<br />Callback function when the selected value changes |
-| height | 216 | `number`<br />Height of the picker in `px` |
-| itemHeight | 36 | `number`<br />Height of each item (that is each option) in `px` |
-| wheelMode | `'off'` | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers |
+| Prop       | Default   | Description                                                                              |
+|:-----------|:----------|:-----------------------------------------------------------------------------------------|
+| value      | N/A       | `{ [name: string]: string }`<br />Selected value pairs                                   |
+| onChange   | N/A       | `(value: T, key: string) => void`<br />Callback function when the selected value changes |
+| height     | 216       | `number`<br />Height of the picker in `px`                                               |
+| itemHeight | 36        | `number`<br />Height of each item (that is each option) in `px`                          |
+| wheelMode  | `'off'`   | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers         |
+| mouseMode  | `'click'` | `'click' \| 'drag'`<br />How to select an item with a mouse — by click or drag.          |
 
 ### Picker.Column
 
