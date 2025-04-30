@@ -1,6 +1,6 @@
 {
   "name": "react-mobile-picker",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "An iOS like select box component for React",
   "type": "module",
   "keywords": [
