@@ -1,6 +1,6 @@
 {
   "name": "react-mobile-picker",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "An iOS like select box component for React",
   "type": "module",
   "keywords": [
@@ -46,8 +46,8 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16 || ^17 || ^18 || ^19",
-    "react-dom": "^16 || ^17 || ^18 || ^19"
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
   },
   "devDependencies": {
     "@headlessui/react": "^2.2.2",

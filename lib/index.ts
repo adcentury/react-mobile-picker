@@ -1,10 +1,15 @@
-import Picker, { PickerValue, PickerRootProps as PickerProps } from './components/Picker'
-import Column from './components/PickerColumn'
-import Item from './components/PickerItem'
+import PickerRoot, { PickerValue, PickerRootProps as PickerProps } from './components/Picker'
+import PickerColumn from './components/PickerColumn'
+import PickerItem from './components/PickerItem'
 
 export type { PickerProps, PickerValue }
 
-export default Object.assign(Picker, {
-  Column,
-  Item,
-})
+const Picker = PickerRoot as typeof PickerRoot & {
+  Column: typeof PickerColumn
+  Item: typeof PickerItem
+}
+
+Picker.Column = PickerColumn
+Picker.Item = PickerItem
+
+export default Picker
