@@ -134,6 +134,7 @@ the main Picker container component.
 | height | 216 | `number`<br />Height of the picker in `px` |
 | itemHeight | 36 | `number`<br />Height of each item (that is each option) in `px` |
 | wheelMode | `'off'` | `'off' \| 'natural' \| 'normal'`<br />Enable wheel scrolling on desktop browsers |
+| showDivider | `true` | `boolean`<br />Whether to show the center divider lines |
 
 ### Picker.Column
 
